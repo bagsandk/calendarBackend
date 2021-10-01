@@ -6,6 +6,7 @@ const {
   GraphQLString,
 } = require("graphql");
 const { knex } = require("../../db/knex");
+const { convertToDate } = require("../../Utils/convertToDate");
 const InputCalendarType = new GraphQLObjectType({
   name: "CalendarInput",
   fields: () => ({
@@ -14,7 +15,12 @@ const InputCalendarType = new GraphQLObjectType({
     created_by: { type: GraphQLInt },
     uri: { type: GraphQLString },
     status: { type: StatusType },
-    created_at: { type: GraphQLString },
+    created_at: {
+      type: GraphQLString,
+      resolve(parent) {
+        return convertToDate(parent.created_at);
+      },
+    },
   }),
 });
 const CalendarType = new GraphQLObjectType({
@@ -36,7 +42,12 @@ const CalendarType = new GraphQLObjectType({
     },
     uri: { type: GraphQLString },
     status: { type: StatusType },
-    created_at: { type: GraphQLString },
+    created_at: {
+      type: GraphQLString,
+      resolve(parent) {
+        return convertToDate(parent.created_at);
+      },
+    },
   }),
 });
 

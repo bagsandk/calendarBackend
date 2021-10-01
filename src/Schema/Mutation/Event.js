@@ -35,29 +35,18 @@ module.exports.UPDATE_EVENT = {
   type: InputEventType,
   args: {
     id: { type: GraphQLInt },
-    calendar_id: { type: GraphQLInt },
     desc: { type: GraphQLString },
     title: { type: GraphQLString },
     start_date: { type: GraphQLString },
     finish_date: { type: GraphQLString },
   },
   async resolve(parent, args) {
-    const {
-      id,
-      calendar_id,
-      title,
-      start_date,
-      finish_date,
-      desc,
-    } = args;
-
+    const { id, title, start_date, finish_date, desc } = args;
     await updateEvent(id, {
       title,
-      calendar_id,
       desc,
       start_date,
       finish_date,
-      created_by,
     });
     return args;
   },

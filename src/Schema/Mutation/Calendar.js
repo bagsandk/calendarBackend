@@ -12,16 +12,15 @@ module.exports.CREATE_CALENDAR = {
   type: InputCalendarType,
   args: {
     calendar_name: { type: GraphQLString },
-    status: { type: GraphQLString },
   },
   async resolve(parent, args, ctx) {
     if (!ctx.userId) {
       return null;
     }
-    const { calendar_name, status } = args;
+    const { calendar_name } = args;
     await insertCalendar({
       calendar_name,
-      status,
+      status: "waiting",
       created_by: ctx.userId,
       uri: uuidv4(),
     });
@@ -33,15 +32,14 @@ module.exports.UPDATE_CALENDAR = {
   args: {
     id: { type: GraphQLInt },
     calendar_name: { type: GraphQLString },
-    status: { type: GraphQLString },
   },
   async resolve(parent, args, ctx) {
     if (!ctx.userId) {
       return null;
     }
-    const { id, calendar_name, status } = args;
+    const { id, calendar_name } = args;
 
-    await updateCalendar(id, { calendar_name, status });
+    await updateCalendar(id, { calendar_name });
     return args;
   },
 };

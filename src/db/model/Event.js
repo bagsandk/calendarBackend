@@ -32,9 +32,10 @@ const getOneEvent = (id) => {
     })
     .first();
 };
-const getEventByUser = (user_id) => {
+const getEventByUserAndCalendar = (user_id, calendar_id) => {
   return knex.select().from("events").where({
     created_by: user_id,
+    calendar_id: calendar_id,
   });
 };
 
@@ -44,5 +45,5 @@ module.exports = {
   getOneEvent,
   updateEvent,
   deleteEvent,
-  getEventByUser,
+  getEventByUserAndCalendar,
 };

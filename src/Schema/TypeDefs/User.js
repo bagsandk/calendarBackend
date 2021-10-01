@@ -4,6 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
 } = require("graphql");
+const { convertToDate } = require("../../Utils/convertToDate");
 module.exports.UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
@@ -11,7 +12,12 @@ module.exports.UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     level: { type: LevelType },
-    created_at: { type: GraphQLString },
+    created_at: {
+      type: GraphQLString,
+      resolve(parent) {
+        return convertToDate(parent.created_at);
+      },
+    },
   }),
 });
 
@@ -22,5 +28,3 @@ const LevelType = new GraphQLEnumType({
     USER: { value: "user" },
   },
 });
-
-

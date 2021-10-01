@@ -18,6 +18,7 @@ const {
   GET_CALENDAR,
   GET_CALENDARS,
   GET_CALENDAR_BY_USER,
+  GET_CALENDAR_BY_URI,
 } = require("./Query/Calendar.js");
 const {
   GET_EVENT,
@@ -33,6 +34,7 @@ const rootQuery = new GraphQLObjectType({
     getUser: GET_USER,
     getUsers: GET_USERS,
     getCalendar: GET_CALENDAR,
+    getCalendarByUri: GET_CALENDAR_BY_URI,
     getCalendars: GET_CALENDARS,
     getCalendarsByUser: GET_CALENDAR_BY_USER,
     getEvent: GET_EVENT,

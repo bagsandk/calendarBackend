@@ -2,7 +2,7 @@ const { GraphQLList, GraphQLInt } = require("graphql");
 const {
   getAllEvent,
   getOneEvent,
-  getEventByUser,
+  getEventByUserAndCalendar,
 } = require("../../db/model/Event.js");
 const { EventType } = require("../TypeDefs/Event.js");
 
@@ -25,10 +25,15 @@ module.exports.GET_EVENT = {
 module.exports.GET_EVENT_BY_USER = {
   type: new GraphQLList(EventType),
   args: {
-    user_id: { type: GraphQLInt },
+    calendar_id: { type: GraphQLInt },
   },
-  resolve(parent, args) {
-    const { user_id } = args;
-    return getEventByUser(user_id);
+  async resolve(parent, args, ctx) {
+    const { calendar_id } = args;
+    if (!ctx.userId) {
+      return null;
+    }
+    const data = await getEventByUserAndCalendar(ctx.userId, calendar_id);
+    console.log(data)
+    return data;
   },
 };
